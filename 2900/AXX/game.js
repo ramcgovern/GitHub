@@ -150,8 +150,8 @@ PS.init = function( system, options ) {
 	var w = {
 		top: 0,
 		bottom: 0,
-		left: 0,
-		right: 0,
+		left: 1,
+		right: 1,
 
 	};
 
@@ -161,7 +161,7 @@ PS.init = function( system, options ) {
 	}
 
 	//Bead Size
-	PS.scale(PS.ALL, PS.ALL, 75);
+	PS.scale(PS.ALL, PS.ALL, 100);
 
 
 	//Audio Files

@@ -165,11 +165,11 @@ PS.init = function( system, options ) {
 
 
 	//Audio Files
-	PS.audioLoad ("l_hchord_a2", { lock : true } );
-	PS.audioLoad ("l_hchord_b2", { lock : true } );
-	PS.audioLoad ("l_hchord_c3", { lock : true } );
-	PS.audioLoad ("l_hchord_d3", { lock : true } );
-	PS.audioLoad ("l_hchord_e3", { lock : true } );
+	PS.audioLoad ("l_hchord_a5", { lock : true } );
+	PS.audioLoad ("l_hchord_b5", { lock : true } );
+	PS.audioLoad ("l_hchord_c5", { lock : true } );
+	PS.audioLoad ("l_hchord_d5", { lock : true } );
+	PS.audioLoad ("l_hchord_e5", { lock : true } );
 
 	//Status Line
 	PS.statusColor( PS.COLOR_BLACK );
@@ -216,23 +216,23 @@ PS.touch = function( x, y, data, options ) {
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("l_hchord_a2");
+			PS.audioPlay("l_hchord_a5");
 		}
 
 		if (x === 1){
-			PS.audioPlay("l_hchord_b2");
+			PS.audioPlay("l_hchord_b5");
 		}
 
 		if (x === 2){
-			PS.audioPlay("l_hchord_c3");
+			PS.audioPlay("l_hchord_c5");
 		}
 
 		if (x === 3){
-			PS.audioPlay("l_hchord_d3");
+			PS.audioPlay("l_hchord_d5");
 		}
 
 		if (x === 4){
-			PS.audioPlay("l_hchord_e3");
+			PS.audioPlay("l_hchord_e5");
 		}
 	}
 

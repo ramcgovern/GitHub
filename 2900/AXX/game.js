@@ -13,7 +13,7 @@ If you don't use JSHint (or are using it with a configuration file), you can saf
 "use strict"; // Do NOT delete this directive!
 var LIGHT = {
 	//CONSTANTS
-	GRID_WIDTH: 5, // width of grid
+	GRID_WIDTH: 7, // width of grid
 	GRID_HEIGHT: 16, // height of grid
 	BOTTOM_ROW: 15,
 	TOP_ROW: 0, // top row of grid
@@ -28,7 +28,9 @@ var LIGHT = {
 		0xE8863D,
 		0xEBB830,
 		0x4DBD74,
-		0x439899
+		0x439899,
+		0x3588F2, //blue
+		0xF24BF2 //magenta
 	],
 
 
@@ -215,7 +217,7 @@ PS.touch = function( x, y, data, options ) {
 
 	//Play different notes when different colors in the bottom row are pressed
 
-	while (y === LIGHT.BOTTOM_ROW ) { //Only plays the note when the bottom row is selected
+	if (y === LIGHT.BOTTOM_ROW ) { //Only plays the note when the bottom row is selected
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){

@@ -98,7 +98,7 @@ var LIGHT = {
 				// point index to next drop
 
 				i += 1;
-				PS.fade( x, y, 60 );
+
 			}
 
 			// Bead has already been splashed, so remove it from animation list
@@ -143,6 +143,9 @@ PS.init = function( system, options ) {
 
 	PS.border( PS.ALL, PS.ALL, 0 );
 
+	if ( y !== BOTTOM_ROW){
+		PS.fade( PS.ALL, PS.ALL, 60 );
+	}
 
 
 	// Draw bottom row

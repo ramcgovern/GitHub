@@ -65,7 +65,7 @@ var LIGHT = {
 			x = LIGHT.lightX[ i ];
 			y = LIGHT.lightY[ i ];
 
-			
+
 
 			// If bead is below the top row, erase it and redraw one bead higher
 
@@ -215,7 +215,7 @@ PS.touch = function( x, y, data, options ) {
 
 	//Play different notes when different colors in the bottom row are pressed
 
-	if (y === LIGHT.BOTTOM_ROW ) { //Only plays the note when the bottom row is selected
+	while (y === LIGHT.BOTTOM_ROW ) { //Only plays the note when the bottom row is selected
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){

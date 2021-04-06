@@ -161,7 +161,7 @@ PS.init = function( system, options ) {
 	}
 
 	//Bead Size
-	PS.scale( PS.ALL, 16, 73);
+	PS.scale( PS.ALL, 15, 73);
 
 
 	//Audio Files

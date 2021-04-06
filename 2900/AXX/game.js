@@ -86,7 +86,7 @@ var LIGHT = {
 					// Repaint the drop one bead lower
 
 					PS.color( x, y, LIGHT.COLORS[x] ); // get color for this column
-
+					PS.fade( x, y, 60 );
 				}
 
 				// Bead has reached top, erase it!

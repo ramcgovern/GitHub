@@ -10,6 +10,15 @@ If you don't use JSHint (or are using it with a configuration file), you can saf
 /* jshint browser : true, devel : true, esversion : 6, freeze : true */
 /* globals PS : true */
 
+
+
+//Rose McGovern - Team Smart World - Assignment A17 for IMGD 2900 Digital Game Design I
+//"Splash Tunes"
+//This simple music toy allows a user to play piano notes from the C major scale, C, E, & G
+//The user plays the notes by hovering over an area of the grid
+//The lower the user hovers on the screen the higher the volume of the note is
+
+
 "use strict"; // Do NOT delete this directive!
 var LIGHT = {
 	//CONSTANTS
@@ -21,18 +30,17 @@ var LIGHT = {
 	BG_COLOR: 0xFFFFFF, // background color
 	LIGHT_COLOR: 0xF25856, //  color of light stream
 
-	// Your bead colors
-
+	// Bead colors
 	COLORS : [
 
-		0x9E3939, //dark red
-		0xF25856,
-		0xE8863D,
-		0xEBB830,
-		0x4DBD74,
-		0x439899,
-		0x25524E, //blue
-		0x283F52 //dark blue
+		0x9E3939, //Dark Red
+		0xF25856, //Red
+		0xE8863D, //Orange
+		0xEBB830, //Yellow
+		0x4DBD74, //Green
+		0x439899, //Teal
+		0x25524E, //Blue
+		0x283F52 //Dark Blue
 	],
 
 
@@ -43,7 +51,7 @@ var LIGHT = {
 
 	//FUNCTIONS
 	//LIGHT.shoot()
-	//When the bead reaches the top of the light stream it disapears
+	//When the animation reaches the top of the "light stream"  or grid it disappears
 	shoot : function( x, y ){
 		"use strict";
 		PS.color( x, y, LIGHT.BG_COLOR );
@@ -53,18 +61,15 @@ var LIGHT = {
 	tick : function () {
 		var len, i, x, y;
 
-		// The length of the LIGHT.lightX array is the current number of keys playing/light streams
+		// The length of the LIGHT.lightX array is the current number of keys playing or animations
 
 		len = LIGHT.lightX.length; // number of keys
 
 		// Loop through each active light stream
-		// NOTE: We can't use a for/next loop in this case,
-		// because we need to dynamically modify the index variable [i]
-		// Javascript doesn't allow this in for/next loops
 
 		i = 0;
 		while ( i < len ) {
-			// get current position of raindrop
+			// get current position of colored bead aka "light drop"
 
 			x = LIGHT.lightX[ i ];
 			y = LIGHT.lightY[ i ];
@@ -74,22 +79,19 @@ var LIGHT = {
 			// If bead is below the top row, erase it and redraw one bead higher
 
 			if ( y >= LIGHT.TOP_ROW ) {
-				// erase the existing drop
-				// PS.debug( "PS.COLOR @ " + x + ", " + y + "\n" );
+
+				// erase the existing colored bead
 				PS.color( x, y, LIGHT.BG_COLOR );
 
-				// add 1 to y position
-
+				// subtract 1 to y position
 				y -= 1;
 
 				// update its y position in the array
-
 				LIGHT.lightY[ i ] = y;
 
-				// Has drop reached the top row yet?
-
+				// Has the colored bead reached the top row yet?
 				if ( y >= LIGHT.TOP_ROW ) { // nope
-					// Repaint the drop one bead lower
+					// Repaint the colored bead one bead lower
 
 					PS.color( x, y, LIGHT.COLORS[x] ); // get color for this column
 					PS.fade (x, y, 60);
@@ -136,9 +138,6 @@ Any value returned is ignored.
 let idTimer;
 
 PS.init = function( system, options ) {
-	// Change this string to your team name
-	// Use only ALPHABETIC characters
-	// No numbers, spaces or punctuation!
 
 	const TEAM = "SmartWorld";
 
@@ -172,29 +171,20 @@ PS.init = function( system, options ) {
 
 
 
+	//New audio files for c major chord
+	PS.audioLoad ("piano_c3", { lock : true} );
+	PS.audioLoad ("piano_e3", { lock : true} );
+	PS.audioLoad ("piano_g3", { lock : true} );
+	PS.audioLoad ("piano_c4", { lock : true} );
+	PS.audioLoad ("piano_e4", { lock : true} );
+	PS.audioLoad ("piano_g4", { lock : true} );
+	PS.audioLoad ("piano_c5", { lock : true} );
+	PS.audioLoad ("piano_e5", { lock : true} );
 
-
-
-	//Audio Files
-	PS.audioLoad ("hchord_f5", { lock : true } );
-	PS.audioLoad ("hchord_g5", { lock : true } );
-	PS.audioLoad ("hchord_c5", { lock : true } );
-	PS.audioLoad ("hchord_d5", { lock : true } );
-	PS.audioLoad ("hchord_e5", { lock : true } );
-	PS.audioLoad ("hchord_a5", { lock : true } );
-	PS.audioLoad ("hchord_b5", { lock : true } );
-
-	PS.audioLoad ("l_hchord_f5", { lock : true } );
-	PS.audioLoad ("l_hchord_g5", { lock : true } );
-	PS.audioLoad ("l_hchord_c5", { lock : true } );
-	PS.audioLoad ("l_hchord_d5", { lock : true } );
-	PS.audioLoad ("l_hchord_e5", { lock : true } );
-	PS.audioLoad ("l_hchord_a5", { lock : true } );
-	PS.audioLoad ("l_hchord_b5", { lock : true } );
 
 	//Status Line
 	PS.statusColor( PS.COLOR_BLACK );
-	PS.statusText( "Simple Music Toy" );
+	PS.statusText( "Splash Tunes" );
 
 	idTimer = PS.timerStart( LIGHT.FRAME_RATE, LIGHT.tick );
 
@@ -215,879 +205,415 @@ PS.init = function( system, options ) {
 	}, { active : false } );
 };
 
-/*
-PS.touch ( x, y, data, options )
-Called when the left mouse button is clicked over bead(x, y), or when bead(x, y) is touched.
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
+
 
 PS.touch = function( x, y, data, options ) {
-	// Uncomment the following code line
-	// to inspect x/y parameters:
 
-	// PS.debug( "PS.touch() @ " + x + ", " + y + "\n" );
-
-	//Play different notes when different colors in the bottom row are pressed
-/**
-	if (y === LIGHT.BOTTOM_ROW ) { //Only plays the note when the bottom row is selected
-		y -= 1; // prevents bottom bead from being erased
-
-		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 1.0});
-		}
-
-		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 1.0});
-		}
-
-		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 1.0});
-		}
-
-		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 1.0});
-		}
-
-		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 1.0});
-		}
-		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 1.0});
-		}
-		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 1.0});
-		}
-		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 1.0});
-		}
-	}
-
-	//8th row
-	if (y === 8 ) { //Only plays the note when the bottom row is selected
-		y -= 1; // prevents bottom bead from being erased
-
-		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.9});
-		}
-
-		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.9});
-		}
-
-		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.9});
-		}
-
-		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.9});
-		}
-
-		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.9});
-		}
-		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.9});
-		}
-		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.9});
-		}
-		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.9});
-		}
-	}
-
-	//7th row
-	if (y === 7 ) { //Only plays the note when the bottom row is selected
-		y -= 1; // prevents bottom bead from being erased
-
-		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.8});
-		}
-
-		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.8});
-		}
-
-		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.8});
-		}
-
-		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.8});
-		}
-
-		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.8});
-		}
-		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.8});
-		}
-		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.8});
-		}
-		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.8});
-		}
-	}
-
-	//6th row
-	if (y === 6 ) { //Only plays the note when the bottom row is selected
-		y -= 1; // prevents bottom bead from being erased
-
-		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.7});
-		}
-
-		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.7});
-		}
-
-		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.7});
-		}
-
-		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.7});
-		}
-
-		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.7});
-		}
-		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.7});
-		}
-		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.7});
-		}
-		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.7});
-		}
-	}
-
-	//5th row
-	if (y === 5 ) { //Only plays the note when the bottom row is selected
-		y -= 1; // prevents bottom bead from being erased
-
-		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.6});
-		}
-
-		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.6});
-		}
-
-		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.6});
-		}
-
-		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.6});
-		}
-
-		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.6});
-		}
-		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.6});
-		}
-		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.6});
-		}
-		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.6});
-		}
-	}
-
-	//4th row
-	if (y === 4 ) { //Only plays the note when the bottom row is selected
-		y -= 1; // prevents bottom bead from being erased
-
-		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.5});
-		}
-
-		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.5});
-		}
-
-		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.5});
-		}
-
-		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.5});
-		}
-
-		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.5});
-		}
-		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.5});
-		}
-		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.5});
-		}
-		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.5});
-		}
-	}
-
-	//3th row
-	if (y === 3 ) { //Only plays the note when the bottom row is selected
-		y -= 1; // prevents bottom bead from being erased
-
-		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.4});
-		}
-
-		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.4});
-		}
-
-		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.4});
-		}
-
-		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.4});
-		}
-
-		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.4});
-		}
-		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.4});
-		}
-		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.4});
-		}
-		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.4});
-		}
-	}
-
-	//2nd row
-	if (y === 2 ) { //Only plays the note when the bottom row is selected
-		y -= 1; // prevents bottom bead from being erased
-
-		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.3});
-		}
-
-		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.3});
-		}
-
-		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.3});
-		}
-
-		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.3});
-		}
-
-		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.3});
-		}
-		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.3});
-		}
-		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.3});
-		}
-		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.3});
-		}
-	}
-
-	//1st row
-	if (y === 1 ) { //Only plays the note when the bottom row is selected
-		y -= 1; // prevents bottom bead from being erased
-
-		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.2});
-		}
-
-		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.2});
-		}
-
-		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.2});
-		}
-
-		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.2});
-		}
-
-		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.2});
-		}
-		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.2});
-		}
-		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.2});
-		}
-		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.2});
-		}
-	}
-
-	//0th row
-	if (y === 0 ) { //Only plays the note when the bottom row is selected
-		y -= 1; // prevents bottom bead from being erased
-
-		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.1});
-		}
-
-		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.1});
-		}
-
-		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.1});
-		}
-
-		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.1});
-		}
-
-		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.1});
-		}
-		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.1});
-		}
-		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.1});
-		}
-		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.1});
-		}
-	}
-
-**/
-	//Add initial position to the animation list
-	//LIGHT.lightX.push( x );
-	//LIGHT.lightY.push( y );
 };
 
-/*
-PS.release ( x, y, data, options )
-Called when the left mouse button is released, or when a touch is lifted, over bead(x, y).
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
+
 
 PS.release = function( x, y, data, options ) {
-	// Uncomment the following code line to inspect x/y parameters:
 
-	// PS.debug( "PS.release() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse button/touch is released over a bead.
 };
 
-/*
-PS.enter ( x, y, button, data, options )
-Called when the mouse cursor/touch enters bead(x, y).
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
+
 
 PS.enter = function( x, y, data, options ) {
-	// Uncomment the following code line to inspect x/y parameters:
 
-	// PS.debug( "PS.enter() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse cursor/touch enters a bead.
-
+//Plays a sound when the user enters a bead, the lower the bead y postion, the lower the volume
 	if (y === LIGHT.BOTTOM_ROW ) { //Only plays the note when the bottom row is selected
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("hchord_c5", { volume: 1.0});
+			PS.audioPlay("piano_c3", { volume: 0.5});
 		}
 
 		if (x === 1){
-			PS.audioPlay("hchord_d5", { volume: 1.0});
+			PS.audioPlay("piano_e3", { volume: 0.5});
 		}
 
 		if (x === 2){
-			PS.audioPlay("hchord_e5", { volume: 1.0});
+			PS.audioPlay("piano_g3", { volume: 0.5});
 		}
 
 		if (x === 3){
-			PS.audioPlay("hchord_f5", { volume: 1.0});
+			PS.audioPlay("piano_c4", { volume: 0.5});
 		}
 
 		if (x === 4){
-			PS.audioPlay("hchord_g5", { volume: 1.0});
+			PS.audioPlay("piano_e4", { volume: 0.5});
 		}
 		if (x === 5){
-			PS.audioPlay("hchord_a5", { volume: 1.0});
+			PS.audioPlay("piano_g4", { volume: 0.5});
 		}
 		if (x === 6){
-			PS.audioPlay("hchord_b5", { volume: 1.0});
+			PS.audioPlay("piano_c5", { volume: 0.5});
 		}
 		if (x === 7){
-			PS.audioPlay("hchord_c6", { volume: 1.0});
+			PS.audioPlay("piano_e5", { volume: 0.5});
 		}
-		//LIGHT.lightX.push( x );
-		//LIGHT.lightY.push( y );
+
 	}
+
+	//Adds postion to array
 	LIGHT.lightX.push( x );
 	LIGHT.lightY.push( y );
 	//8th row
-	if (y === 8 ) { //Only plays the note when the bottom row is selected
+	if (y === 8 ) {
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("hchord_c5", { volume: 0.9});
+			PS.audioPlay("piano_c3", { volume: 0.45});
 		}
 
 		if (x === 1){
-			PS.audioPlay("hchord_d5", { volume: 0.9});
+			PS.audioPlay("piano_e3", { volume: 0.45});
 		}
 
 		if (x === 2){
-			PS.audioPlay("hchord_e5", { volume: 0.9});
+			PS.audioPlay("piano_g3", { volume: 0.45});
 		}
 
 		if (x === 3){
-			PS.audioPlay("hchord_f5", { volume: 0.9});
+			PS.audioPlay("piano_c4", { volume: 0.45});
 		}
 
 		if (x === 4){
-			PS.audioPlay("hchord_g5", { volume: 0.9});
+			PS.audioPlay("piano_e4", { volume: 0.45});
 		}
 		if (x === 5){
-			PS.audioPlay("hchord_a5", { volume: 0.9});
+			PS.audioPlay("piano_g4", { volume: 0.45});
 		}
 		if (x === 6){
-			PS.audioPlay("hchord_b5", { volume: 0.9});
+			PS.audioPlay("piano_c5", { volume: 0.45});
 		}
 		if (x === 7){
-			PS.audioPlay("hchord_c6", { volume: 0.9});
+			PS.audioPlay("piano_e5", { volume: 0.9});
 		}
-		//LIGHT.lightX.push( x );
-		//LIGHT.lightY.push( y );
+
 	}
 
 	//7th row
-	if (y === 7 ) { //Only plays the note when the bottom row is selected
+	if (y === 7 ) {
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("hchord_c5", { volume: 0.8});
+			PS.audioPlay("piano_c3", { volume: 0.4});
 		}
 
 		if (x === 1){
-			PS.audioPlay("hchord_d5", { volume: 0.8});
+			PS.audioPlay("piano_e3", { volume: 0.4});
 		}
 
 		if (x === 2){
-			PS.audioPlay("hchord_e5", { volume: 0.8});
+			PS.audioPlay("piano_g3", { volume: 0.4});
 		}
 
 		if (x === 3){
-			PS.audioPlay("hchord_f5", { volume: 0.8});
+			PS.audioPlay("piano_c4", { volume: 0.4});
 		}
 
 		if (x === 4){
-			PS.audioPlay("hchord_g5", { volume: 0.8});
+			PS.audioPlay("piano_e4", { volume: 0.4});
 		}
 		if (x === 5){
-			PS.audioPlay("hchord_a5", { volume: 0.8});
+			PS.audioPlay("piano_g4", { volume: 0.4});
 		}
 		if (x === 6){
-			PS.audioPlay("hchord_b5", { volume: 0.8});
+			PS.audioPlay("piano_c5", { volume: 0.4});
 		}
 		if (x === 7){
-			PS.audioPlay("hchord_c6", { volume: 0.8});
+			PS.audioPlay("piano_e5", { volume: 0.4});
 		}
-		//LIGHT.lightX.push( x );
-		//LIGHT.lightY.push( y );
+
 	}
 
 	//6th row
-	if (y === 6 ) { //Only plays the note when the bottom row is selected
+	if (y === 6 ) {
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("hchord_c5", { volume: 0.7});
+			PS.audioPlay("piano_c3", { volume: 0.35});
 		}
 
 		if (x === 1){
-			PS.audioPlay("hchord_d5", { volume: 0.7});
+			PS.audioPlay("piano_e3", { volume: 0.35});
 		}
 
 		if (x === 2){
-			PS.audioPlay("hchord_e5", { volume: 0.7});
+			PS.audioPlay("piano_g3", { volume: 0.35});
 		}
 
 		if (x === 3){
-			PS.audioPlay("hchord_f5", { volume: 0.7});
+			PS.audioPlay("piano_c4", { volume: 0.35});
 		}
 
 		if (x === 4){
-			PS.audioPlay("hchord_g5", { volume: 0.7});
+			PS.audioPlay("piano_e4", { volume: 0.35});
 		}
 		if (x === 5){
-			PS.audioPlay("hchord_a5", { volume: 0.7});
+			PS.audioPlay("piano_g4", { volume: 0.35});
 		}
 		if (x === 6){
-			PS.audioPlay("hchord_b5", { volume: 0.7});
+			PS.audioPlay("piano_c5", { volume: 0.35});
 		}
 		if (x === 7){
-			PS.audioPlay("hchord_c6", { volume: 0.7});
+			PS.audioPlay("piano_e5", { volume: 0.35});
 		}
 
-		//LIGHT.lightX.push( x );
-		//LIGHT.lightY.push( y );
+
 	}
 
 	//5th row
-	if (y === 5 ) { //Only plays the note when the bottom row is selected
+	if (y === 5 ) {
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("hchord_c5", { volume: 0.6});
+			PS.audioPlay("piano_c3", { volume: 0.3});
 		}
 
 		if (x === 1){
-			PS.audioPlay("hchord_d5", { volume: 0.6});
+			PS.audioPlay("piano_e3", { volume: 0.3});
 		}
 
 		if (x === 2){
-			PS.audioPlay("hchord_e5", { volume: 0.6});
+			PS.audioPlay("piano_g3", { volume: 0.3});
 		}
 
 		if (x === 3){
-			PS.audioPlay("hchord_f5", { volume: 0.6});
+			PS.audioPlay("piano_c4", { volume: 0.3});
 		}
 
 		if (x === 4){
-			PS.audioPlay("hchord_g5", { volume: 0.6});
+			PS.audioPlay("piano_e4", { volume: 0.3});
 		}
 		if (x === 5){
-			PS.audioPlay("hchord_a5", { volume: 0.6});
+			PS.audioPlay("piano_g4", { volume: 0.3});
 		}
 		if (x === 6){
-			PS.audioPlay("hchord_b5", { volume: 0.6});
+			PS.audioPlay("piano_c5", { volume: 0.3});
 		}
 		if (x === 7){
-			PS.audioPlay("hchord_c6", { volume: 0.6});
+			PS.audioPlay("piano_e5", { volume: 0.3});
 		}
 
-		//LIGHT.lightX.push( x );
-		//LIGHT.lightY.push( y );
+
 	}
 
 	//4th row
-	if (y === 4 ) { //Only plays the note when the bottom row is selected
+	if (y === 4 ) {
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("hchord_c5", { volume: 0.5});
+			PS.audioPlay("piano_c3", { volume: 0.25});
 		}
 
 		if (x === 1){
-			PS.audioPlay("hchord_d5", { volume: 0.5});
+			PS.audioPlay("piano_e3", { volume: 0.25});
 		}
 
 		if (x === 2){
-			PS.audioPlay("hchord_e5", { volume: 0.5});
+			PS.audioPlay("piano_g3", { volume: 0.25});
 		}
 
 		if (x === 3){
-			PS.audioPlay("hchord_f5", { volume: 0.5});
+			PS.audioPlay("piano_c4", { volume: 0.25});
 		}
 
 		if (x === 4){
-			PS.audioPlay("hchord_g5", { volume: 0.5});
+			PS.audioPlay("piano_e4", { volume: 0.25});
 		}
 		if (x === 5){
-			PS.audioPlay("hchord_a5", { volume: 0.5});
+			PS.audioPlay("piano_g4", { volume: 0.25});
 		}
 		if (x === 6){
-			PS.audioPlay("hchord_b5", { volume: 0.5});
+			PS.audioPlay("piano_c5", { volume: 0.25});
 		}
 		if (x === 7){
-			PS.audioPlay("hchord_c6", { volume: 0.5});
+			PS.audioPlay("piano_e5", { volume: 0.25});
 		}
 
-		//LIGHT.lightX.push( x );
-		//LIGHT.lightY.push( y );
+
 	}
 
 	//3th row
-	if (y === 3 ) { //Only plays the note when the bottom row is selected
+	if (y === 3 ) {
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("hchord_c5", { volume: 0.4});
+			PS.audioPlay("piano_c3", { volume: 0.2});
 		}
 
 		if (x === 1){
-			PS.audioPlay("hchord_d5", { volume: 0.4});
+			PS.audioPlay("piano_e3", { volume: 0.2});
 		}
 
 		if (x === 2){
-			PS.audioPlay("hchord_e5", { volume: 0.4});
+			PS.audioPlay("piano_g3", { volume: 0.2});
 		}
 
 		if (x === 3){
-			PS.audioPlay("hchord_f5", { volume: 0.4});
+			PS.audioPlay("piano_c4", { volume: 0.2});
 		}
 
 		if (x === 4){
-			PS.audioPlay("hchord_g5", { volume: 0.4});
+			PS.audioPlay("piano_e4", { volume: 0.2});
 		}
 		if (x === 5){
-			PS.audioPlay("hchord_a5", { volume: 0.4});
+			PS.audioPlay("piano_g4", { volume: 0.2});
 		}
 		if (x === 6){
-			PS.audioPlay("hchord_b5", { volume: 0.4});
+			PS.audioPlay("piano_c5", { volume: 0.2});
 		}
 		if (x === 7){
-			PS.audioPlay("hchord_c6", { volume: 0.4});
+			PS.audioPlay("piano_e5", { volume: 0.2});
 		}
-		//LIGHT.lightX.push( x );
-		//LIGHT.lightY.push( y );
+
 	}
 
 	 //2nd row
-	 if (y === 2 ) { //Only plays the note when the bottom row is selected
+	 if (y === 2 ) {
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.3});
+			PS.audioPlay("piano_c3", { volume: 0.15});
 		}
 
 		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.3});
+			PS.audioPlay("piano_e3", { volume: 0.15});
 		}
 
 		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.3});
+			PS.audioPlay("piano_g3", { volume: 0.15});
 		}
 
 		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.3});
+			PS.audioPlay("piano_c4", { volume: 0.15});
 		}
 
 		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.3});
+			PS.audioPlay("piano_e4", { volume: 0.15});
 		}
 		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.3});
+			PS.audioPlay("piano_g4", { volume: 0.15});
 		}
 		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.3});
+			PS.audioPlay("piano_c5", { volume: 0.15});
 		}
 		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.3});
+			PS.audioPlay("piano_e5", { volume: 0.15});
 		}
-		// LIGHT.lightX.push( x );
-		// LIGHT.lightY.push( y );
+
 	}
 
 	 //1st row
-	 if (y === 1 ) { //Only plays the note when the bottom row is selected
+	 if (y === 1 ) {
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.2});
+			PS.audioPlay("piano_c3", { volume: 0.1});
 		}
 
 		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.2});
+			PS.audioPlay("piano_e3", { volume: 0.1});
 		}
 
 		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.2});
+			PS.audioPlay("piano_g3", { volume: 0.1});
 		}
 
 		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.2});
+			PS.audioPlay("l_piano_c4", { volume: 0.1});
 		}
 
 		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.2});
+			PS.audioPlay("piano_e4", { volume: 0.1});
 		}
 		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.2});
+			PS.audioPlay("piano_g4", { volume: 0.1});
 		}
 		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.2});
+			PS.audioPlay("piano_c5", { volume: 0.1});
 		}
 		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.2});
+			PS.audioPlay("piano_e5", { volume: 0.1});
 		}
 
-		// LIGHT.lightX.push( x );
-		// LIGHT.lightY.push( y );
+
 	}
 
 	 //0th row
-	 if (y === 0 ) { //Only plays the note when the bottom row is selected
+	 if (y === 0 ) {
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("l_hchord_c5", { volume: 0.1});
+			PS.audioPlay("piano_c3", { volume: 0.05});
 		}
 
 		if (x === 1){
-			PS.audioPlay("l_hchord_d5", { volume: 0.1});
+			PS.audioPlay("piano_e3", { volume: 0.05});
 		}
 
 		if (x === 2){
-			PS.audioPlay("l_hchord_e5", { volume: 0.1});
+			PS.audioPlay("piano_g3", { volume: 0.05});
 		}
 
 		if (x === 3){
-			PS.audioPlay("l_hchord_f5", { volume: 0.1});
+			PS.audioPlay("piano_c4", { volume: 0.05});
 		}
 
 		if (x === 4){
-			PS.audioPlay("l_hchord_g5", { volume: 0.1});
+			PS.audioPlay("piano_e4", { volume: 0.05});
 		}
 		if (x === 5){
-			PS.audioPlay("l_hchord_a5", { volume: 0.1});
+			PS.audioPlay("piano_g4", { volume: 0.05});
 		}
 		if (x === 6){
-			PS.audioPlay("l_hchord_b5", { volume: 0.1});
+			PS.audioPlay("piano_c5", { volume: 0.05});
 		}
 		if (x === 7){
-			PS.audioPlay("l_hchord_c6", { volume: 0.1});
+			PS.audioPlay("piano_e5", { volume: 0.05});
 		}
 
-		// LIGHT.lightX.push( x );
-		// LIGHT.lightY.push( y );
 	}
 
 
 
-	//Add initial position to the animation list
 
 
 };
 
-/*
-PS.exit ( x, y, data, options )
-Called when the mouse cursor/touch exits bead(x, y).
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
+
 
 PS.exit = function( x, y, data, options ) {
-	// Uncomment the following code line to inspect x/y parameters:
 
-	// PS.debug( "PS.exit() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse cursor/touch exits a bead.
 };
 
-/*
-PS.exitGrid ( options )
-Called when the mouse cursor/touch exits the grid perimeter.
-This function doesn't have to do anything. Any value returned is ignored.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
 
 PS.exitGrid = function( options ) {
-	// Uncomment the following code line to verify operation:
 
-	// PS.debug( "PS.exitGrid() called\n" );
-
-	// Add code here for when the mouse cursor/touch moves off the grid.
 };
 
-/*
-PS.keyDown ( key, shift, ctrl, options )
-Called when a key on the keyboard is pressed.
-This function doesn't have to do anything. Any value returned is ignored.
-[key : Number] = ASCII code of the released key, or one of the PS.KEY_* constants documented in the API.
-[shift : Boolean] = true if shift key is held down, else false.
-[ctrl : Boolean] = true if control key is held down, else false.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
 
 PS.keyDown = function( key, shift, ctrl, options ) {
-	// Uncomment the following code line to inspect first three parameters:
 
-	// PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
 
-	// Add code here for when a key is pressed.
 };
-
-/*
-PS.keyUp ( key, shift, ctrl, options )
-Called when a key on the keyboard is released.
-This function doesn't have to do anything. Any value returned is ignored.
-[key : Number] = ASCII code of the released key, or one of the PS.KEY_* constants documented in the API.
-[shift : Boolean] = true if shift key is held down, else false.
-[ctrl : Boolean] = true if control key is held down, else false.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
 
 PS.keyUp = function( key, shift, ctrl, options ) {
-	// Uncomment the following code line to inspect first three parameters:
 
-	// PS.debug( "PS.keyUp(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
-
-	// Add code here for when a key is released.
 };
 
-/*
-PS.input ( sensors, options )
-Called when a supported input device event (other than those above) is detected.
-This function doesn't have to do anything. Any value returned is ignored.
-[sensors : Object] = A JavaScript object with properties indicating sensor status; see API documentation for details.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-NOTE: Currently, only mouse wheel events are reported, and only when the mouse cursor is positioned directly over the grid.
-*/
+
 
 PS.input = function( sensors, options ) {
-	// Uncomment the following code lines to inspect first parameter:
 
-	//	 var device = sensors.wheel; // check for scroll wheel
-	//
-	//	 if ( device ) {
-	//	   PS.debug( "PS.input(): " + device + "\n" );
-	//	 }
-
-	// Add code here for when an input event is detected.
 };
 
-/*
-PS.shutdown ( options )
-Called when the browser window running Perlenspiel is about to close.
-This function doesn't have to do anything. Any value returned is ignored.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-NOTE: This event is generally needed only by applications utilizing networked telemetry.
-*/
+
 
 PS.shutdown = function( options ) {
-	// Uncomment the following code line to verify operation:
 
-	// PS.debug( "“Dave. My mind is going. I can feel it.”\n" );
-
-	// Add code here to tidy up when Perlenspiel is about to close.
 };
 

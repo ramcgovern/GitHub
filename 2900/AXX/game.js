@@ -25,13 +25,13 @@ var LIGHT = {
 
 	COLORS : [
 
-		0xF55C9B, //pink
+		0x9E3939, //pink
 		0xF25856,
 		0xE8863D,
 		0xEBB830,
 		0x4DBD74,
 		0x439899,
-		0x3B6B8F, //blue
+		0x25524E, //blue
 		0x56378F //magenta
 	],
 

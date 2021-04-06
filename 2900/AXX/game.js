@@ -13,7 +13,7 @@ If you don't use JSHint (or are using it with a configuration file), you can saf
 "use strict"; // Do NOT delete this directive!
 var LIGHT = {
 	//CONSTANTS
-	GRID_WIDTH: 7, // width of grid
+	GRID_WIDTH: 8, // width of grid
 	GRID_HEIGHT: 16, // height of grid
 	BOTTOM_ROW: 15,
 	TOP_ROW: 0, // top row of grid
@@ -24,6 +24,8 @@ var LIGHT = {
 	// Your bead colors
 
 	COLORS : [
+
+		0xF55C9B, //pink
 		0xF25856,
 		0xE8863D,
 		0xEBB830,

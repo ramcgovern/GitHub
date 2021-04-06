@@ -14,8 +14,8 @@ If you don't use JSHint (or are using it with a configuration file), you can saf
 var LIGHT = {
 	//CONSTANTS
 	GRID_WIDTH: 8, // width of grid
-	GRID_HEIGHT: 16, // height of grid
-	BOTTOM_ROW: 15,
+	GRID_HEIGHT: 10, // height of grid
+	BOTTOM_ROW: 9,
 	TOP_ROW: 0, // top row of grid
 	FRAME_RATE: 2,	// animation frame rate; 6/60ths = 10 fps
 	BG_COLOR: 0xFFFFFF, // background color
@@ -25,14 +25,14 @@ var LIGHT = {
 
 	COLORS : [
 
-		0x9E3939, //pink
+		0x9E3939, //dark red
 		0xF25856,
 		0xE8863D,
 		0xEBB830,
 		0x4DBD74,
 		0x439899,
 		0x25524E, //blue
-		0x56378F //magenta
+		0x283F52 //dark blue
 	],
 
 
@@ -147,36 +147,50 @@ PS.init = function( system, options ) {
 
 	PS.gridColor( LIGHT.BG_COLOR );
 
-	PS.border( PS.ALL, PS.ALL, 0 );
+	// Init upper beads
+	// This assigns a fader to each bead programmed to BEGIN any color change
+	// with its default color
 
-
-
-	// Draw bottom row
-	PS.border(PS.ALL, 14, w);
-
-	var w = {
-		top: 0,
-		bottom: 0,
-		left: 1,
-		right: 1,
-
-	};
-
-	for ( let x = 0; x < LIGHT.GRID_WIDTH; x += 1 ) {
-		PS.color( x, LIGHT.BOTTOM_ROW, LIGHT.COLORS[x] );
-		PS.borderColor(x, 14, LIGHT.COLORS[x]);
+	for ( let y = 0; y < LIGHT.BOTTOM_ROW; y += 1 ) {
+		for ( let x = 0; x < LIGHT.GRID_WIDTH; x += 1 ) {
+			PS.color( x, y, LIGHT.BG_COLOR );
+			PS.border( x, y, 0 ); // *BM* Use borders to "shrink" beads instead of scaling
+			PS.borderColor( x, y, LIGHT.BG_COLOR );
+			PS.fade( x, y, 60, { rgb : LIGHT.COLORS[ x ] } ); // *BM* This is where the magic happens!
+		}
 	}
 
-	//Bead Size
-	PS.scale( PS.ALL, 15, 90);
+	// Init bottom row
+	// Note: Beads are small enough that border size cannot be increased.
+
+	for ( let x = 0; x < LIGHT.GRID_WIDTH; x += 1 ) {
+		PS.color( x, LIGHT.BOTTOM_ROW, LIGHT.COLORS[ x ] );
+		PS.scale( x, LIGHT.BOTTOM_ROW, 90 ); // *BM* These can be scaled with no danger of misfires
+		PS.borderColor( x, LIGHT.BOTTOM_ROW, LIGHT.COLORS[ x ] );
+	}
+
+
+
+
+
 
 
 	//Audio Files
+	PS.audioLoad ("hchord_f5", { lock : true } );
+	PS.audioLoad ("hchord_g5", { lock : true } );
+	PS.audioLoad ("hchord_c5", { lock : true } );
+	PS.audioLoad ("hchord_d5", { lock : true } );
+	PS.audioLoad ("hchord_e5", { lock : true } );
+	PS.audioLoad ("hchord_a5", { lock : true } );
+	PS.audioLoad ("hchord_b5", { lock : true } );
+
 	PS.audioLoad ("l_hchord_f5", { lock : true } );
 	PS.audioLoad ("l_hchord_g5", { lock : true } );
 	PS.audioLoad ("l_hchord_c5", { lock : true } );
 	PS.audioLoad ("l_hchord_d5", { lock : true } );
 	PS.audioLoad ("l_hchord_e5", { lock : true } );
+	PS.audioLoad ("l_hchord_a5", { lock : true } );
+	PS.audioLoad ("l_hchord_b5", { lock : true } );
 
 	//Status Line
 	PS.statusColor( PS.COLOR_BLACK );
@@ -218,34 +232,350 @@ PS.touch = function( x, y, data, options ) {
 	// PS.debug( "PS.touch() @ " + x + ", " + y + "\n" );
 
 	//Play different notes when different colors in the bottom row are pressed
-
+/**
 	if (y === LIGHT.BOTTOM_ROW ) { //Only plays the note when the bottom row is selected
 		y -= 1; // prevents bottom bead from being erased
 
 		if (x === 0){
-			PS.audioPlay("l_hchord_c5");
+			PS.audioPlay("l_hchord_c5", { volume: 1.0});
 		}
 
 		if (x === 1){
-			PS.audioPlay("l_hchord_d5");
+			PS.audioPlay("l_hchord_d5", { volume: 1.0});
 		}
 
 		if (x === 2){
-			PS.audioPlay("l_hchord_e5");
+			PS.audioPlay("l_hchord_e5", { volume: 1.0});
 		}
 
 		if (x === 3){
-			PS.audioPlay("l_hchord_f5");
+			PS.audioPlay("l_hchord_f5", { volume: 1.0});
 		}
 
 		if (x === 4){
-			PS.audioPlay("l_hchord_g5");
+			PS.audioPlay("l_hchord_g5", { volume: 1.0});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 1.0});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 1.0});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 1.0});
 		}
 	}
 
+	//8th row
+	if (y === 8 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.9});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.9});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.9});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.9});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.9});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.9});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.9});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.9});
+		}
+	}
+
+	//7th row
+	if (y === 7 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.8});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.8});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.8});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.8});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.8});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.8});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.8});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.8});
+		}
+	}
+
+	//6th row
+	if (y === 6 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.7});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.7});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.7});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.7});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.7});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.7});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.7});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.7});
+		}
+	}
+
+	//5th row
+	if (y === 5 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.6});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.6});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.6});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.6});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.6});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.6});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.6});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.6});
+		}
+	}
+
+	//4th row
+	if (y === 4 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.5});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.5});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.5});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.5});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.5});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.5});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.5});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.5});
+		}
+	}
+
+	//3th row
+	if (y === 3 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.4});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.4});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.4});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.4});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.4});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.4});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.4});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.4});
+		}
+	}
+
+	//2nd row
+	if (y === 2 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.3});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.3});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.3});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.3});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.3});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.3});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.3});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.3});
+		}
+	}
+
+	//1st row
+	if (y === 1 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.2});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.2});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.2});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.2});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.2});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.2});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.2});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.2});
+		}
+	}
+
+	//0th row
+	if (y === 0 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.1});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.1});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.1});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.1});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.1});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.1});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.1});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.1});
+		}
+	}
+
+**/
 	//Add initial position to the animation list
-	LIGHT.lightX.push( x );
-	LIGHT.lightY.push( y );
+	//LIGHT.lightX.push( x );
+	//LIGHT.lightY.push( y );
 };
 
 /*
@@ -282,6 +612,377 @@ PS.enter = function( x, y, data, options ) {
 	// PS.debug( "PS.enter() @ " + x + ", " + y + "\n" );
 
 	// Add code here for when the mouse cursor/touch enters a bead.
+
+	if (y === LIGHT.BOTTOM_ROW ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("hchord_c5", { volume: 1.0});
+		}
+
+		if (x === 1){
+			PS.audioPlay("hchord_d5", { volume: 1.0});
+		}
+
+		if (x === 2){
+			PS.audioPlay("hchord_e5", { volume: 1.0});
+		}
+
+		if (x === 3){
+			PS.audioPlay("hchord_f5", { volume: 1.0});
+		}
+
+		if (x === 4){
+			PS.audioPlay("hchord_g5", { volume: 1.0});
+		}
+		if (x === 5){
+			PS.audioPlay("hchord_a5", { volume: 1.0});
+		}
+		if (x === 6){
+			PS.audioPlay("hchord_b5", { volume: 1.0});
+		}
+		if (x === 7){
+			PS.audioPlay("hchord_c6", { volume: 1.0});
+		}
+		//LIGHT.lightX.push( x );
+		//LIGHT.lightY.push( y );
+	}
+	LIGHT.lightX.push( x );
+	LIGHT.lightY.push( y );
+	//8th row
+	if (y === 8 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("hchord_c5", { volume: 0.9});
+		}
+
+		if (x === 1){
+			PS.audioPlay("hchord_d5", { volume: 0.9});
+		}
+
+		if (x === 2){
+			PS.audioPlay("hchord_e5", { volume: 0.9});
+		}
+
+		if (x === 3){
+			PS.audioPlay("hchord_f5", { volume: 0.9});
+		}
+
+		if (x === 4){
+			PS.audioPlay("hchord_g5", { volume: 0.9});
+		}
+		if (x === 5){
+			PS.audioPlay("hchord_a5", { volume: 0.9});
+		}
+		if (x === 6){
+			PS.audioPlay("hchord_b5", { volume: 0.9});
+		}
+		if (x === 7){
+			PS.audioPlay("hchord_c6", { volume: 0.9});
+		}
+		//LIGHT.lightX.push( x );
+		//LIGHT.lightY.push( y );
+	}
+
+	//7th row
+	if (y === 7 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("hchord_c5", { volume: 0.8});
+		}
+
+		if (x === 1){
+			PS.audioPlay("hchord_d5", { volume: 0.8});
+		}
+
+		if (x === 2){
+			PS.audioPlay("hchord_e5", { volume: 0.8});
+		}
+
+		if (x === 3){
+			PS.audioPlay("hchord_f5", { volume: 0.8});
+		}
+
+		if (x === 4){
+			PS.audioPlay("hchord_g5", { volume: 0.8});
+		}
+		if (x === 5){
+			PS.audioPlay("hchord_a5", { volume: 0.8});
+		}
+		if (x === 6){
+			PS.audioPlay("hchord_b5", { volume: 0.8});
+		}
+		if (x === 7){
+			PS.audioPlay("hchord_c6", { volume: 0.8});
+		}
+		//LIGHT.lightX.push( x );
+		//LIGHT.lightY.push( y );
+	}
+
+	//6th row
+	if (y === 6 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("hchord_c5", { volume: 0.7});
+		}
+
+		if (x === 1){
+			PS.audioPlay("hchord_d5", { volume: 0.7});
+		}
+
+		if (x === 2){
+			PS.audioPlay("hchord_e5", { volume: 0.7});
+		}
+
+		if (x === 3){
+			PS.audioPlay("hchord_f5", { volume: 0.7});
+		}
+
+		if (x === 4){
+			PS.audioPlay("hchord_g5", { volume: 0.7});
+		}
+		if (x === 5){
+			PS.audioPlay("hchord_a5", { volume: 0.7});
+		}
+		if (x === 6){
+			PS.audioPlay("hchord_b5", { volume: 0.7});
+		}
+		if (x === 7){
+			PS.audioPlay("hchord_c6", { volume: 0.7});
+		}
+
+		//LIGHT.lightX.push( x );
+		//LIGHT.lightY.push( y );
+	}
+
+	//5th row
+	if (y === 5 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("hchord_c5", { volume: 0.6});
+		}
+
+		if (x === 1){
+			PS.audioPlay("hchord_d5", { volume: 0.6});
+		}
+
+		if (x === 2){
+			PS.audioPlay("hchord_e5", { volume: 0.6});
+		}
+
+		if (x === 3){
+			PS.audioPlay("hchord_f5", { volume: 0.6});
+		}
+
+		if (x === 4){
+			PS.audioPlay("hchord_g5", { volume: 0.6});
+		}
+		if (x === 5){
+			PS.audioPlay("hchord_a5", { volume: 0.6});
+		}
+		if (x === 6){
+			PS.audioPlay("hchord_b5", { volume: 0.6});
+		}
+		if (x === 7){
+			PS.audioPlay("hchord_c6", { volume: 0.6});
+		}
+
+		//LIGHT.lightX.push( x );
+		//LIGHT.lightY.push( y );
+	}
+
+	//4th row
+	if (y === 4 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("hchord_c5", { volume: 0.5});
+		}
+
+		if (x === 1){
+			PS.audioPlay("hchord_d5", { volume: 0.5});
+		}
+
+		if (x === 2){
+			PS.audioPlay("hchord_e5", { volume: 0.5});
+		}
+
+		if (x === 3){
+			PS.audioPlay("hchord_f5", { volume: 0.5});
+		}
+
+		if (x === 4){
+			PS.audioPlay("hchord_g5", { volume: 0.5});
+		}
+		if (x === 5){
+			PS.audioPlay("hchord_a5", { volume: 0.5});
+		}
+		if (x === 6){
+			PS.audioPlay("hchord_b5", { volume: 0.5});
+		}
+		if (x === 7){
+			PS.audioPlay("hchord_c6", { volume: 0.5});
+		}
+
+		//LIGHT.lightX.push( x );
+		//LIGHT.lightY.push( y );
+	}
+
+	//3th row
+	if (y === 3 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("hchord_c5", { volume: 0.4});
+		}
+
+		if (x === 1){
+			PS.audioPlay("hchord_d5", { volume: 0.4});
+		}
+
+		if (x === 2){
+			PS.audioPlay("hchord_e5", { volume: 0.4});
+		}
+
+		if (x === 3){
+			PS.audioPlay("hchord_f5", { volume: 0.4});
+		}
+
+		if (x === 4){
+			PS.audioPlay("hchord_g5", { volume: 0.4});
+		}
+		if (x === 5){
+			PS.audioPlay("hchord_a5", { volume: 0.4});
+		}
+		if (x === 6){
+			PS.audioPlay("hchord_b5", { volume: 0.4});
+		}
+		if (x === 7){
+			PS.audioPlay("hchord_c6", { volume: 0.4});
+		}
+		//LIGHT.lightX.push( x );
+		//LIGHT.lightY.push( y );
+	}
+
+	 //2nd row
+	 if (y === 2 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.3});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.3});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.3});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.3});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.3});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.3});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.3});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.3});
+		}
+		// LIGHT.lightX.push( x );
+		// LIGHT.lightY.push( y );
+	}
+
+	 //1st row
+	 if (y === 1 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.2});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.2});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.2});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.2});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.2});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.2});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.2});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.2});
+		}
+
+		// LIGHT.lightX.push( x );
+		// LIGHT.lightY.push( y );
+	}
+
+	 //0th row
+	 if (y === 0 ) { //Only plays the note when the bottom row is selected
+		y -= 1; // prevents bottom bead from being erased
+
+		if (x === 0){
+			PS.audioPlay("l_hchord_c5", { volume: 0.1});
+		}
+
+		if (x === 1){
+			PS.audioPlay("l_hchord_d5", { volume: 0.1});
+		}
+
+		if (x === 2){
+			PS.audioPlay("l_hchord_e5", { volume: 0.1});
+		}
+
+		if (x === 3){
+			PS.audioPlay("l_hchord_f5", { volume: 0.1});
+		}
+
+		if (x === 4){
+			PS.audioPlay("l_hchord_g5", { volume: 0.1});
+		}
+		if (x === 5){
+			PS.audioPlay("l_hchord_a5", { volume: 0.1});
+		}
+		if (x === 6){
+			PS.audioPlay("l_hchord_b5", { volume: 0.1});
+		}
+		if (x === 7){
+			PS.audioPlay("l_hchord_c6", { volume: 0.1});
+		}
+
+		// LIGHT.lightX.push( x );
+		// LIGHT.lightY.push( y );
+	}
+
+
+
+	//Add initial position to the animation list
+
+
 };
 
 /*

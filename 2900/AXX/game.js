@@ -65,7 +65,7 @@ var LIGHT = {
 			x = LIGHT.lightX[ i ];
 			y = LIGHT.lightY[ i ];
 
-			if ( y !== BOTTOM_ROW){
+			if ( y !== 15){
 				PS.fade( PS.ALL, PS.ALL, 60 );
 			}
 

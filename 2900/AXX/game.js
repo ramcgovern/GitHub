@@ -86,7 +86,7 @@ var LIGHT = {
 					// Repaint the drop one bead lower
 
 					PS.color( x, y, LIGHT.COLORS[x] ); // get color for this column
-					PS.fade( x, y, 60 );
+
 				}
 
 				// Bead has reached top, erase it!
@@ -98,6 +98,7 @@ var LIGHT = {
 				// point index to next drop
 
 				i += 1;
+				PS.fade( x, y, 60 );
 			}
 
 			// Bead has already been splashed, so remove it from animation list

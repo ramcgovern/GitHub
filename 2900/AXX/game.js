@@ -65,9 +65,7 @@ var LIGHT = {
 			x = LIGHT.lightX[ i ];
 			y = LIGHT.lightY[ i ];
 
-			if ( y !== 15){
-				PS.fade( PS.ALL, PS.ALL, 60 );
-			}
+			
 
 			// If bead is below the top row, erase it and redraw one bead higher
 

@@ -161,8 +161,8 @@ PS.init = function( system, options ) {
 	}
 
 	//Bead Size
-	PS.scale( PS.ALL, 15, 73);
-
+	PS.scale( PS.ALL, 15, 90);
+S
 
 	//Audio Files
 	PS.audioLoad ("l_hchord_f5", { lock : true } );

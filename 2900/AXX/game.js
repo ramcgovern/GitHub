@@ -30,7 +30,7 @@ var LIGHT = {
 		0x4DBD74,
 		0x439899,
 		0x3588F2, //blue
-		0xB34040 //magenta
+		0x3D7E8F //magenta
 	],
 
 

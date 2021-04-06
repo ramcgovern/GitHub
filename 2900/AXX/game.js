@@ -66,7 +66,7 @@ var LIGHT = {
 			y = LIGHT.lightY[ i ];
 
 			if ( y !== 15){
-				PS.fade( PS.ALL, PS.ALL, 30 );
+				PS.fade( PS.ALL, PS.ALL, 60 );
 			}
 
 			// If bead is below the top row, erase it and redraw one bead higher
@@ -90,7 +90,7 @@ var LIGHT = {
 					// Repaint the drop one bead lower
 
 					PS.color( x, y, LIGHT.COLORS[x] ); // get color for this column
-
+					PS.fade (x, y, 60);
 				}
 
 				// Bead has reached top, erase it!

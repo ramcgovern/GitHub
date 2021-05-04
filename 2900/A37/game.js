@@ -48,7 +48,7 @@ Any value returned is ignored.
 [system : Object] = A JavaScript object containing engine and host platform information properties; see API documentation for details.
 [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
 */
-var G;
+var G; //test
 
 ( function () {
 		"use strict";
@@ -88,12 +88,15 @@ var G;
 			GRID_HEIGHT_RED2: 5, // height of grid
 			GRID_WIDTH_RED3: 7, // width of grid
 			GRID_HEIGHT_RED3: 7, // height of grid
+			GRID_WIDTH_RED4: 9, // width of grid
+			GRID_HEIGHT_RED4: 9, // height of grid
 			GRID_SIZE_GREEN1: 3,
 			GRID_SIZE_GREEN2: 6,
 			GRID_SIZE_GREEN3: 8,
 			GRID_SIZE_BLUE1: 3,
 			GRID_SIZE_BLUE2: 5,
 			GRID_SIZE_BLUE3: 8,
+			GRID_SIZE_BLUE4: 9,
 			GRID_SIZE_ORANGE1: 4,
 			GRID_SIZE_ORANGE2: 6,
 			GRID_SIZE_ORANGE3: 8,
@@ -185,8 +188,8 @@ var G;
 
 			randomBeadRed4: function () {
 
-				let randomNumberX = Math.floor(Math.random() * (G.GRID_WIDTH_RED3 - 1));
-				let randomNumberY = Math.floor(Math.random() * (G.GRID_HEIGHT_RED3 - 1));
+				let randomNumberX = Math.floor(Math.random() * (G.GRID_WIDTH_RED4 - 1));
+				let randomNumberY = Math.floor(Math.random() * (G.GRID_HEIGHT_RED4 - 1));
 				PS.color(randomNumberX, randomNumberY, G.COLOR_SOLORED4);
 			},
 
@@ -215,8 +218,8 @@ var G;
 
 			randomBeadBlue4: function () {
 
-				let randomNumberX = Math.floor(Math.random() * (G.GRID_SIZE_BLUE3 - 1));
-				let randomNumberY = Math.floor(Math.random() * (G.GRID_SIZE_BLUE3 - 1));
+				let randomNumberX = Math.floor(Math.random() * (G.GRID_SIZE_BLUE4 - 1));
+				let randomNumberY = Math.floor(Math.random() * (G.GRID_SIZE_BLUE4 - 1));
 				PS.color(randomNumberX, randomNumberY, G.COLOR_SOLOBLUE4);
 			},
 
@@ -322,7 +325,7 @@ var G;
 			},
 
 			level4red: function () {
-				PS.gridSize(G.GRID_WIDTH_RED3, G.GRID_HEIGHT_RED3);
+				PS.gridSize(G.GRID_WIDTH_RED4, G.GRID_HEIGHT_RED4);
 				PS.gridShadow( true, 0x7e2323);
 				PS.color(PS.ALL, PS.ALL, G.COLOR_RED);
 				PS.gridColor(G.BG_COLOR);
@@ -635,7 +638,7 @@ var G;
 			}
 			PS.dbEvent(TEAM, "startup", user);
 			PS.dbSend(TEAM, PS.CURRENT, {discard: true});
-		}, {active: true});
+		}, {active: false});
 
 		// Change the false in the final line above to true
 		// before deploying the code to your Web site.

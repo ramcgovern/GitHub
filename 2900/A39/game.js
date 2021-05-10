@@ -55,8 +55,7 @@ var G; //test
 
 		// Private variables
 
-		var level = 1;
-
+		var level = 0;
 		var timer = null; // timer id, null if none
 		var count = 0; // countdown value
 
@@ -80,16 +79,17 @@ var G; //test
 
 
 
-			level: 0,
+
 			//CONSTANTS
-			GRID_WIDTH_RED1: 2, // width of grid
-			GRID_HEIGHT_RED1: 2, // height of grid
-			GRID_WIDTH_RED2: 5, // width of grid
-			GRID_HEIGHT_RED2: 5, // height of grid
-			GRID_WIDTH_RED3: 7, // width of grid
-			GRID_HEIGHT_RED3: 7, // height of grid
-			GRID_WIDTH_RED4: 9, // width of grid
-			GRID_HEIGHT_RED4: 9, // height of grid
+			//Grid Sizes for each level
+			GRID_WIDTH_RED1: 2,
+			GRID_HEIGHT_RED1: 2,
+			GRID_WIDTH_RED2: 5,
+			GRID_HEIGHT_RED2: 5,
+			GRID_WIDTH_RED3: 7,
+			GRID_HEIGHT_RED3: 7,
+			GRID_WIDTH_RED4: 9,
+			GRID_HEIGHT_RED4: 9,
 			GRID_SIZE_GREEN1: 3,
 			GRID_SIZE_GREEN2: 6,
 			GRID_SIZE_GREEN3: 8,
@@ -118,7 +118,9 @@ var G; //test
 			GRID_SIZE_BLUE5: 10,
 
 
+			//Colors
 			BG_COLOR: 0x1a1a1a,
+
 			COLOR_RED: 0xff4d4d,
 			COLOR_SOLORED1: 0xed3737,
 			COLOR_SOLORED2: 0xff4040,
@@ -164,26 +166,9 @@ var G; //test
 			COLOR_SOLOPURPLE5: 0x665e7c,
 
 			//FUNCTIONS
+			//Generate a random bead to put the different color on
 
-			COLORS: [
-				0x605975,
-				0xe6bb39,
-				0xfb6648,
-				0x5ca5ff,
-				0x69c972,
-				0xff4d4d,
-
-			],
-
-			//GENERATE RANDOM COLOR FOR SCORE SCREEN
-			randomColor: function () {
-
-				var randomColor = G.COLORS[Math.floor(Math.random() * G.COLORS.length)];
-
-				return randomColor;
-			},
-			//GENERATE RANDOM BEAD
-
+			//Greens
 			randomBeadGreen1: function () {
 
 				let randomNumberX = Math.floor(Math.random() * (G.GRID_SIZE_GREEN1 - 1));
@@ -218,6 +203,7 @@ var G; //test
 				PS.color(randomNumberX, randomNumberY, G.COLOR_SOLOGREEN5);
 			},
 
+			//Reds
 			randomBeadRed1: function () {
 
 				let randomNumberX = Math.floor(Math.random() * (G.GRID_WIDTH_RED1 - 1));
@@ -252,6 +238,7 @@ var G; //test
 			},
 
 
+			//Blues
 			randomBeadBlue1: function () {
 
 				let randomNumberX = Math.floor(Math.random() * (G.GRID_SIZE_BLUE1 - 1));
@@ -289,6 +276,7 @@ var G; //test
 
 
 
+			//Yellows
 			randomBeadYellow1: function () {
 
 				let randomNumberX = Math.floor(Math.random() * (G.GRID_SIZE_YELLOW1 - 1));
@@ -323,6 +311,7 @@ var G; //test
 				PS.color(randomNumberX, randomNumberY, G.COLOR_SOLOYELLOW5);
 			},
 
+			//Orange
 			randomBeadOrange1: function () {
 
 				let randomNumberX = Math.floor(Math.random() * (G.GRID_SIZE_ORANGE1 - 1));
@@ -358,6 +347,7 @@ var G; //test
 			},
 
 
+			//Purple
 			randomBeadPurple1: function () {
 
 				let randomNumberX = Math.floor(Math.random() * (G.GRID_SIZE_PURPLE1 - 1));
@@ -392,6 +382,8 @@ var G; //test
 				PS.color(randomNumberX, randomNumberY, G.COLOR_SOLOPURPLE5);
 			},
 
+			//Functions that initiate new grids at each level
+			//Each level is assigned a level number with the level variable to mark the score
 //red
 			level1red: function () {
 				PS.gridSize(G.GRID_WIDTH_RED1, G.GRID_HEIGHT_RED1)
@@ -399,7 +391,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_RED);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 1;
 				this.randomBeadRed1();
@@ -411,7 +402,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_RED);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 7;
 				this.randomBeadRed2();
@@ -423,7 +413,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_RED);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 13;
 				this.randomBeadRed3();
@@ -435,7 +424,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_RED);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 19;
 				this.randomBeadRed4();
@@ -447,7 +435,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_RED);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 25;
 				this.randomBeadRed5();
@@ -461,7 +448,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_BLUE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 
 				level = 2;
@@ -475,7 +461,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_BLUE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 8;
 				this.randomBeadBlue2();
@@ -489,7 +474,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_BLUE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 14;
 				this.randomBeadBlue3();
@@ -501,7 +485,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_BLUE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 20;
 				this.randomBeadBlue4();
@@ -513,7 +496,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_BLUE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 26;
 				this.randomBeadBlue5();
@@ -528,7 +510,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_GREEN);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 
 				level = 3;
@@ -541,7 +522,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_GREEN);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 9;
 				this.randomBeadGreen2();
@@ -553,7 +533,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_GREEN);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 15;
 				this.randomBeadGreen3();
@@ -565,7 +544,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_GREEN);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 21;
 				this.randomBeadGreen4();
@@ -577,7 +555,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_GREEN);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 27;
 				this.randomBeadGreen5();
@@ -589,7 +566,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_ORANGE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 4;
 				this.randomBeadOrange1();
@@ -601,7 +577,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_ORANGE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 
 				level = 10;
@@ -614,7 +589,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_ORANGE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 16;
 				this.randomBeadOrange3();
@@ -626,7 +600,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_ORANGE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 
 				level = 22;
@@ -639,7 +612,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_ORANGE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 28;
 				this.randomBeadOrange5();
@@ -651,7 +623,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_YELLOW);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 5;
 				this.randomBeadYellow1();
@@ -663,7 +634,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_YELLOW);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 11;
 				this.randomBeadYellow2();
@@ -675,7 +645,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_YELLOW);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 17;
 				this.randomBeadYellow3();
@@ -687,7 +656,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_YELLOW);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 23;
 				this.randomBeadYellow4();
@@ -699,7 +667,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_YELLOW);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 29;
 				this.randomBeadYellow5()
@@ -712,7 +679,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_PURPLE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 6;
 				this.randomBeadPurple1();
@@ -724,7 +690,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_PURPLE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 12;
 				this.randomBeadPurple2();
@@ -736,7 +701,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_PURPLE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 18;
 				this.randomBeadPurple3();
@@ -748,7 +712,6 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_PURPLE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 24;
 				this.randomBeadPurple4();
@@ -760,55 +723,10 @@ var G; //test
 				PS.color(PS.ALL, PS.ALL, G.COLOR_PURPLE);
 				PS.gridColor(G.BG_COLOR);
 				PS.borderColor(PS.ALL, PS.ALL, G.BG_COLOR);
-				//PS.statusText("SELECT THE DIFFERENT COLOR");
 				PS.statusColor(PS.COLOR_WHITE);
 				level = 30;
 				this.randomBeadPurple5();
 			},
-			/*
-            //ARRAYS FOR EACH LEVEL
-            LEVEL1: [
-                G.level1red(),
-                G.level1green(),
-				G.level1blue(),
-            ],
-
-            LEVEL2: [
-                G.level2red(),
-                G.level2green(),
-				G.level2blue(),
-            ],
-
-            LEVEL3: [
-                G.level3red(),
-                G.level3green(),
-				G.level3blue(),
-            ],
-
-
-
-            //choose random color for each level
-            level1: function(){
-                let randomLev1 = G.LEVEL1[Math.floor(Math.random() * G.LEVEL1.length)];
-                return randomLev1;
-            },
-
-            level2: function(){
-                let randomLev2 = G.LEVEL2[Math.floor(Math.random() * G.LEVEL2.length)];
-                return randomLev2;
-            },
-
-            level3: function(){
-                let randomLev3 = G.LEVEL3[Math.floor(Math.random() * G.LEVEL3.length)];
-                return randomLev3;
-            },
-
-
-
-			 */
-
-
-
 
 
 
@@ -824,8 +742,7 @@ var G; //test
 						}
 						else {
 							PS.timerStop( id );
-							PS.statusText( "Final Score: " + level);
-
+							PS.statusText( "Final Score: " + level );
 							PS.fade(PS.ALL,PS.ALL,270);
 							PS.color (PS.ALL, PS.ALL, PS.COLOR_WHITE);
 							PS.gridShadow( true, PS.COLOR_WHITE);
@@ -841,6 +758,8 @@ var G; //test
 		}
 	}()
 )
+
+
 	PS.init = function (system, options) {
 		PS.statusText( "Select the Different Color" );
 
@@ -865,46 +784,35 @@ var G; //test
 			PS.dbSend(TEAM, PS.CURRENT, {discard: true});
 		}, {active: false});
 
-		// Change the false in the final line above to true
-		// before deploying the code to your Web site.
 	};
 
-	/*
-    PS.touch ( x, y, data, options )
-    Called when the left mouse button is clicked over bead(x, y), or when bead(x, y) is touched.
-    This function doesn't have to do anything. Any value returned is ignored.
-    [x : Number] = zero-based x-position (column) of the bead on the grid.
-    [y : Number] = zero-based y-position (row) of the bead on the grid.
-    [data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    */
 
 	PS.touch = function (x, y, data, options) {
 
 
-		//if correct on red level 1 go to level 2
-		if (PS.color(x, y) === G.COLOR_SOLORED1) { //anything from array of solo colors
+		//if correct on red level 1 go to level 2...
+		//Order of levels is red, blue, green, orange, yellow, purple
+		if (PS.color(x, y) === G.COLOR_SOLORED1) {
 			G.level1blue();
 			PS.audioPlay( "fx_boop" );
-
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOBLUE1) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOBLUE1) {
 			G.level1green();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOGREEN1) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOGREEN1) {
 			G.level1orange();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOORANGE1) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOORANGE1) {
 			G.level1yellow();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOYELLOW1) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOYELLOW1) {
 			G.level1purple();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOPURPLE1) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOPURPLE1) {
 			G.level2red();
 			PS.audioPlay( "fx_boop" );
 		}
@@ -912,11 +820,11 @@ var G; //test
 			G.level2blue();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOBLUE2) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOBLUE2) {
 			G.level2green();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOGREEN2) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOGREEN2) {
 			G.level2orange();
 			PS.audioPlay( "fx_boop" );
 		}
@@ -924,131 +832,113 @@ var G; //test
 			G.level2yellow();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOYELLOW2) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOYELLOW2) {
 			G.level2purple();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOPURPLE2) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOPURPLE2) {
 			G.level3red();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLORED3) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLORED3) {
 			G.level3blue();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOBLUE3) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOBLUE3) {
 			G.level3green();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOGREEN3) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOGREEN3) {
 			G.level3orange();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOORANGE3) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOORANGE3) {
 			G.level3yellow();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOYELLOW3) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOYELLOW3) {
 			G.level3purple();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOPURPLE3) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOPURPLE3) {
 			G.level4red();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLORED4) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLORED4) {
 			G.level4blue();
 			PS.audioPlay( "fx_boop" );
 		}
-		//new
 
-		if (PS.color(x, y) === G.COLOR_SOLOBLUE4) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOBLUE4) {
 			G.level4green();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOGREEN4) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOGREEN4) {
 			G.level4orange();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOORANGE4) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOORANGE4) {
 			G.level4yellow();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOYELLOW4) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOYELLOW4) {
 			G.level4purple();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOPURPLE4) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOPURPLE4) {
 			G.level5red();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLORED5) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLORED5) {
 			G.level5blue();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOBLUE5) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOBLUE5) {
 			G.level5green();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOGREEN5) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOGREEN5) {
 			G.level5orange();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOORANGE5) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOORANGE5) {
 			G.level5yellow();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOYELLOW5) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOYELLOW5) {
 			G.level5purple();
 			PS.audioPlay( "fx_boop" );
 		}
-		if (PS.color(x, y) === G.COLOR_SOLOPURPLE5) { //anything from array of solo colors
+		if (PS.color(x, y) === G.COLOR_SOLOPURPLE5) {
 			G.level5red();
 			PS.audioPlay( "fx_boop" );
 		}
 
 
+		//Reset game after timer runs out
+		if (PS.color(x,y) === PS.COLOR_BLACK){
+			PS.init();
+			G.start();
+		}
+
 
 
 	};
 
-	/*
-    PS.release ( x, y, data, options )
-    Called when the left mouse button is released, or when a touch is lifted, over bead(x, y).
-    This function doesn't have to do anything. Any value returned is ignored.
-    [x : Number] = zero-based x-position (column) of the bead on the grid.
-    [y : Number] = zero-based y-position (row) of the bead on the grid.
-    [data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    */
+
 
 	PS.release = function (x, y, data, options) {
-		// Uncomment the following code line to inspect x/y parameters:
-
-		// PS.debug( "PS.release() @ " + x + ", " + y + "\n" );
-
-		// Add code here for when the mouse button/touch is released over a bead.
 	};
 
-	/*
-    PS.enter ( x, y, button, data, options )
-    Called when the mouse cursor/touch enters bead(x, y).
-    This function doesn't have to do anything. Any value returned is ignored.
-    [x : Number] = zero-based x-position (column) of the bead on the grid.
-    [y : Number] = zero-based y-position (row) of the bead on the grid.
-    [data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    */
+
 
 	PS.enter = function (x, y, data, options) {
-		// Uncomment the following code line to inspect x/y parameters:
 
-		// PS.debug( "PS.enter() @ " + x + ", " + y + "\n" );
-
-		//PS.borderColor(x,y, PS.COLOR_WHITE);
+		//Makes border larger for the bead being hovered over
 		PS.border(x,y, 2);
-		// Add code here for when the mouse cursor/touch enters a bead.
 
+		//If the timer has run out (aka when the beads all turn white) turn them black with a fade on hover
+		//Final screen Design
 		if (PS.color(x,y) === PS.COLOR_WHITE){
 			PS.color(x,y, G.BG_COLOR);
 		}
@@ -1056,112 +946,39 @@ var G; //test
 
 	};
 
-	/*
-    PS.exit ( x, y, data, options )
-    Called when the mouse cursor/touch exits bead(x, y).
-    This function doesn't have to do anything. Any value returned is ignored.
-    [x : Number] = zero-based x-position (column) of the bead on the grid.
-    [y : Number] = zero-based y-position (row) of the bead on the grid.
-    [data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    */
+
 
 	PS.exit = function (x, y, data, options) {
-		// Uncomment the following code line to inspect x/y parameters:
 
-		// PS.debug( "PS.exit() @ " + x + ", " + y + "\n" );
+		//Un-highlight border when you exit a bead
 		PS.borderColor(x,y, G.BG_COLOR);
 		PS.border(x,y, 1);
 
-		// Add code here for when the mouse cursor/touch exits a bead.
 	};
 
-	/*
-    PS.exitGrid ( options )
-    Called when the mouse cursor/touch exits the grid perimeter.
-    This function doesn't have to do anything. Any value returned is ignored.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    */
 
 	PS.exitGrid = function (options) {
-		// Uncomment the following code line to verify operation:
 
-		// PS.debug( "PS.exitGrid() called\n" );
-
-		// Add code here for when the mouse cursor/touch moves off the grid.
 	};
 
-	/*
-    PS.keyDown ( key, shift, ctrl, options )
-    Called when a key on the keyboard is pressed.
-    This function doesn't have to do anything. Any value returned is ignored.
-    [key : Number] = ASCII code of the released key, or one of the PS.KEY_* constants documented in the API.
-    [shift : Boolean] = true if shift key is held down, else false.
-    [ctrl : Boolean] = true if control key is held down, else false.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    */
 
 	PS.keyDown = function (key, shift, ctrl, options) {
-		// Uncomment the following code line to inspect first three parameters:
 
-		// PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
-
-		// Add code here for when a key is pressed.
 	};
-
-	/*
-    PS.keyUp ( key, shift, ctrl, options )
-    Called when a key on the keyboard is released.
-    This function doesn't have to do anything. Any value returned is ignored.
-    [key : Number] = ASCII code of the released key, or one of the PS.KEY_* constants documented in the API.
-    [shift : Boolean] = true if shift key is held down, else false.
-    [ctrl : Boolean] = true if control key is held down, else false.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    */
 
 	PS.keyUp = function (key, shift, ctrl, options) {
-		// Uncomment the following code line to inspect first three parameters:
 
-		// PS.debug( "PS.keyUp(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
-
-		// Add code here for when a key is released.
 	};
 
-	/*
-    PS.input ( sensors, options )
-    Called when a supported input device event (other than those above) is detected.
-    This function doesn't have to do anything. Any value returned is ignored.
-    [sensors : Object] = A JavaScript object with properties indicating sensor status; see API documentation for details.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    NOTE: Currently, only mouse wheel events are reported, and only when the mouse cursor is positioned directly over the grid.
-    */
+
 
 	PS.input = function (sensors, options) {
-		// Uncomment the following code lines to inspect first parameter:
 
-		//	 var device = sensors.wheel; // check for scroll wheel
-		//
-		//	 if ( device ) {
-		//	   PS.debug( "PS.input(): " + device + "\n" );
-		//	 }
-
-		// Add code here for when an input event is detected.
 	};
 
-	/*
-    PS.shutdown ( options )
-    Called when the browser window running Perlenspiel is about to close.
-    This function doesn't have to do anything. Any value returned is ignored.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    NOTE: This event is generally needed only by applications utilizing networked telemetry.
-    */
 
 	PS.shutdown = function (options) {
-		// Uncomment the following code line to verify operation:
 
-		// PS.debug( "“Dave. My mind is going. I can feel it.”\n" );
-
-		// Add code here to tidy up when Perlenspiel is about to close.
 	};
 
 
